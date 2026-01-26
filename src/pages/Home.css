@@ -1,0 +1,65 @@
+.HP_container
+{
+    background-color:       rgba(0, 32, 54, 0.5);
+    box-shadow:               0 4px 30px  rgba(0, 0, 0, 0.8);
+    backdrop-filter:          blur(25px);
+    -webkit-backdrop-filter:  blur(25px);
+
+    border-radius: 10px;
+}
+
+.HP_container > span
+{
+    text-align:                center;
+    font-size:                 2.5rem;
+    font-weight:               800;
+    letter-spacing:            0.120rem;
+    text-decoration:           underline;
+    text-decoration-thickness: 0.25rem;
+    text-underline-offset:     0.5rem;
+    text-decoration-color:   #0695e4;
+    color:                   #e8f1ff;
+}
+
+/* [ DESKTOP ] */
+@media (min-width: 1020px) 
+{
+    .HP_container
+    {
+        height: 400px;
+        width:  clamp(800px 800px 800px);
+
+        padding: 4rem;
+
+        display:         flex;
+        align-items:     center;
+        justify-content: space-between;
+        gap:             4rem;
+    }
+
+    .HP_logo { height: 80%; border-radius: 5px;}
+
+    .HP_container > span { width: 50%; }
+}
+
+/* [ MOBILE ] */
+@media (max-width: 1019px) 
+{
+    .HP_container
+    {
+        height: 400px;
+        width:  100%;
+
+        padding: 4rem;
+
+        display:         flex;
+        flex-direction:  column;
+        align-items:     center;
+        justify-content: center;
+        gap:             4rem;
+    }
+
+    .HP_logo { height: 50%; }
+
+    .HP_container > span { width: 100%; }
+}

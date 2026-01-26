@@ -1,0 +1,102 @@
+/* [ DESKTOP ] */
+@media (min-width: 1020px) 
+{
+    .TR_container
+    {
+        height: auto;
+        width:  1000px;
+
+        padding: 2rem 1.5rem;
+
+        display:         flex;
+        flex-direction:  column;
+        align-items:     center;
+        justify-content: space-between;
+        gap: 1rem;
+
+        background-color:       #00203680;
+        box-shadow: 0 4px 30px  rgba(0, 0, 0, 0.8);
+        backdrop-filter:          blur(25px);
+        -webkit-backdrop-filter:  blur(25px);
+
+        border-radius: 15px;
+
+        transition: all ease-out 0.14s;
+    }
+
+    .TR_container > span
+    {
+        font-size:   2rem;
+        font-weight: 800;
+        text-align:  center;
+
+        color: #0695e4;
+    }
+
+    .TR_subform_container
+    {
+        height: 100%;
+        width:  100%;
+
+        display:         flex;
+        align-items:     flex-end;
+        justify-content: space-evenly;
+     
+    }
+
+    .TR_left_subform_container
+    {
+        display:        flex;
+        flex-direction: column;
+        gap:            4rem;
+    }
+
+    .TR_maindata, .TR_ops, .TR_ecos
+    {
+        display:        flex;
+        flex-direction: column;
+        gap:            0.5rem;
+    }
+
+    .TR_Btns
+    {
+        padding: 0.5rem 0;
+        
+        display:         flex;
+        justify-content: space-between;
+    }
+
+    .TR_Btns button
+    {
+        padding: 0.125rem 0.5rem;
+    
+        height: 3.5rem;
+        width:  10rem;
+
+        display:         flex;
+        align-items:     center;
+        justify-content: space-between;
+
+        appearance:    none;
+        border:        none;
+        border-radius: 5px;
+
+        transition: all ease-out 0.14s;
+    }
+
+    .TR_Btns button:first-child { background-color: #0695e4; }
+    .TR_Btns button:last-child  { background-color: #f74f4f; }
+
+    .TR_Btns button:hover, .save_btn:hover   { filter: brightness(0.8); cursor: pointer;}
+    .TR_Btns button:focus, .save_btn:focus   { outline: none; }
+    .TR_Btns button:active, .save_btn:active { filter: blur(0.5px);}
+
+    .TR_Btns img
+    {
+        height: 50%;
+
+        aspect-ratio: 1/1;
+        object-fit:   contain;
+    }
+
+}

@@ -1,0 +1,19 @@
+.containerComponent_div
+{
+    margin:  0;
+    padding: 0;
+
+    box-sizing: border-box;
+    
+    font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+    font-size:   12px;
+
+    transition: all ease-out 0.24s;
+    
+    display:        flex;
+    flex-direction: column;
+    align-items:    center;
+    gap:            0.25rem;
+}
+
+.containerComponent_div h1 { color: #0695e4;}

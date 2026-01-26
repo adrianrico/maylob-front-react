@@ -1,0 +1,122 @@
+.input_container
+{ 
+    height:    3.5rem;
+    width:     100%;
+    min-width: 320px;
+    max-width: 350px;
+    /*flex: 1 0 350px;*/ 
+    
+    display:         flex;
+    align-items:     end;
+    justify-content: space-evenly;
+    gap:             0.25rem;
+
+    transition: all ease-out 0.24s;
+}
+
+.controls_container
+{
+    height: 100%;
+    width:  100%;
+
+    display:         flex;
+    flex-direction:  column;
+    align-items:     center;
+    justify-content: space-evenly;
+
+    gap: 0.25rem;
+}
+
+.input_label
+{
+    height: 1.25rem;
+    width:  100%;
+
+    padding:0 0 0.25rem 0.25rem;
+
+    font-weight:    600;
+    font-size:      clamp(0.8rem,1rem,1rem);
+    letter-spacing: 0.05rem;
+    text-align:     left;
+    color: #e8f1ff;
+}
+
+.input_entry
+{   
+    height: 100%;
+    width:  100%;
+
+    padding-left: 0.25rem;
+
+    font-weight:    100;
+    font-size:      clamp(0.8rem,1rem,1rem);
+    text-align:     left;
+    color:        #e8f1ff;
+
+    appearance: none;
+    border:     none;
+
+    background-color: transparent;
+
+    border-bottom: #0695e4 1px solid;
+
+    transition: all ease-out 0.24s;
+}
+
+.input_entry::placeholder
+{
+    color: #e8f1ff;
+    filter: brightness(0.75);
+}
+
+.input_entry:hover
+{ 
+    background-color: #0695e4;
+    border-radius: 5px;
+    filter: brightness(0.8); 
+    cursor: text;
+}
+.input_entry:focus { outline: none; }
+
+.input_clear
+{
+    height: calc(50% + 0.25rem);
+    width: 2.5rem;
+    
+    display:         flex;
+    align-items:     center;
+    justify-content: center;
+
+    appearance:    none;
+    border:        none;
+    border-radius: 5px;
+
+    background-color: #f74f4f;
+
+    transition: all ease-out 0.24s;
+}
+
+.input_clear img
+{
+    width: 50%;
+    
+    object-fit:   contain;
+    aspect-ratio: 1/1;
+}
+
+.input_clear:hover { filter: brightness(0.8); cursor: pointer;}
+.input_clear:focus { outline: none; }
+
+.entry_ok
+{
+    background-color: #025e47;
+    color: #37bc9b;
+}
+
+.entry_not_ok
+{
+    background-color: #f74f4f;
+    color: #e8f1ff;
+}
+
+

@@ -1,0 +1,175 @@
+.CN_container { max-width: 1980px;}
+
+.CN_logo > img
+{
+    height: 2rem;
+    
+    aspect-ratio: 1/1;
+    object-fit:   contain;
+}
+
+.CN_mobile_logo > img
+{
+    height: 2rem;
+    
+    aspect-ratio: 1/1;
+    object-fit:   contain;
+}
+
+@media (min-width: 1020px) 
+{
+    .CN_container
+    {
+        width:  100%;
+
+        padding: 0.8rem;
+
+        display:         flex;
+        align-items:     center;
+        justify-content: space-between;
+
+        background-color:#001222;
+        /* background-color:#002036; */
+    }
+
+    .CN_logo
+    {
+        text-decoration: none;
+        font-weight:     800;
+        letter-spacing:  0.125rem;
+
+        display:     flex;
+        align-items: center;
+        gap:         1rem;
+
+        color: #e8f1ff;
+    }
+
+    .CN_logo > span {font-size: 1.5rem;}
+
+    .CN_logo:hover { cursor: pointer;}
+
+    .CN_mobile_logo { display: none; }
+
+    .CN_options
+    {
+        height: 100%;
+
+        display:     flex;
+        align-items: center;
+        gap:         1rem;
+
+        list-style-type: none;
+
+        transition: transform 0.3s ease, opacity 0.3s ease;
+    }
+
+    .CN_link_item 
+    {
+        height: 4rem;
+        width:  14rem;
+
+        padding-left: 0.5rem;
+
+        display:         flex;
+        align-items:     center;
+        justify-content: center;
+       
+        border-radius:    5px;
+        background-color: transparent;
+
+        transition: all ease-out 0.20s;
+    }
+
+    .CN_link_item > a 
+    {
+        text-decoration: none;
+        color: #0695e4;
+    }
+
+    .CN_link_item:hover   { background-color:#0695e4; }
+    .CN_link_item:hover > a { color:#e8f1ff; }
+}
+
+
+@media (max-width: 1019px) 
+{
+    .CN_container
+    {
+        width:  100%;
+
+        padding: 0.8rem;
+
+        position: relative;
+
+        display:         flex;
+        flex-direction:  column;
+        align-items:     flex-start;
+        justify-content: space-between;
+        gap:             1rem;
+
+        background-color:       rgb(32, 49, 58,0.5);
+        box-shadow:               0 4px 30px  rgba(0, 0, 0, 0.8);
+        backdrop-filter:          blur(25px);
+        -webkit-backdrop-filter:  blur(25px);
+
+        border-radius: 10px;
+    }
+
+    .CN_mobile_logo { display: flex; }
+    .CN_logo        { display: none;}
+
+    .CN_options 
+    {
+        height: calc(100vh - 80px);
+        width:  100%;
+
+        padding: 1rem;
+
+        position: absolute;
+        top:      60px;
+        left:     0rem;
+        z-index: -999;
+
+        display: flex;
+        flex-direction: column;
+        align-items:    flex-start;
+        gap:            2rem;
+
+        background-color:       rgb(32, 49, 58, 0.9);
+        box-shadow:               0 4px 30px  rgba(0, 0, 0, 0.8);
+        backdrop-filter:          blur(25px);
+        -webkit-backdrop-filter:  blur(25px);
+
+        border-radius: 10px;
+
+        list-style-type: none;
+
+        transform: translatex(-20px);
+        opacity: 0;
+          
+
+        transition: all 0.10s ease-in-out;
+    }
+
+    .CN_options.open 
+    { 
+        display: flex;
+        
+        transform: translatex(0);
+        opacity: 1;
+    }
+
+    .CN_options > li > button
+    {
+        height: 4rem;
+        width:  calc(100vw - 35px);
+
+        appearance:       none;
+        border:           none;
+        border-radius:    5px;
+        background-color: #f5a329;
+
+        color:     #feeee2;
+    }
+}

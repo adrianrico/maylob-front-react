@@ -1,0 +1,86 @@
+.CR_form
+{
+  padding: 2rem 1.5rem;
+
+  display:         flex;
+  flex-direction:  column;
+  align-items:     center;
+  justify-content: center;
+  gap:             0.5rem;
+
+  background-color:      #00203680;
+  box-shadow: 0 4px 30px  rgba(0, 0, 0, 0.8);
+  backdrop-filter:          blur(25px);
+  -webkit-backdrop-filter:  blur(25px);
+
+  border-radius: 15px;
+
+  transition: all ease-out 0.14s;
+}
+
+.CR_form > span
+{
+  font-size:   2rem;
+  font-weight: 800;
+  text-align:  center;
+
+  color: #0695e4;
+}
+
+.CR_form > div
+{
+  width:       100%;
+  
+  display:         flex;
+  justify-content: space-between;
+}
+
+.delete_btn
+{
+    padding: 0.125rem 0.5rem;
+ 
+    height: 3.5rem;
+    width:  10rem;
+
+    display:         flex;
+    align-items:     center;
+    justify-content: space-between;
+
+    appearance:    none;
+    border:        none;
+    border-radius: 5px;
+
+    background-color: #f74f4f;
+}
+
+.save_btn
+{
+    padding: 0.125rem 0.5rem;
+ 
+    height: 3.5rem;
+    width:  10rem;
+
+    display:         flex;
+    align-items:     center;
+    justify-content: space-between;
+
+    appearance:    none;
+    border:        none;
+    border-radius: 5px;
+
+    background-color: #0695e4;
+}
+
+.delete_btn img, .save_btn img
+{
+    height: 50%;
+    
+    object-fit:   contain;
+    aspect-ratio: 1/1;
+}
+
+.delete_btn:hover, .save_btn:hover   { filter: brightness(0.8); cursor: pointer;}
+.delete_btn:focus, .save_btn:focus   { outline: none; }
+.delete_btn:active, .save_btn:active { filter: blur(0.5px);}
+
+.hidden { display: none; }
