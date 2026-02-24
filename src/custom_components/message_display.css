@@ -1,43 +1,23 @@
 .MD_container
 {
-  height: 100%;
-  width:  100%;
+    height: 100%;
+    width:  100%;
 
-  display:         flex;
-  flex-direction:  column;
-  align-items:     center;
-  justify-content: center;
-  gap:             1rem;
+    display:         flex;
+    flex-direction:  column;
+    align-items:     center;
+    justify-content: center;
 
-  transition: all ease-out 0.14s;
-
-  background:             rgba(0, 0, 0, 0.5);  /* LIGHT */
-  box-shadow: 0 4px 30px  rgba(0, 0, 0, 0.8);
-  backdrop-filter:          blur(25px);
-  -webkit-backdrop-filter:  blur(25px);
-
-  border-radius: 10px;
-
-  position: absolute;
-}
-
-
-.MD_display
-{
-    height: 300px;
-    width:  300px;
-
-    display:               grid;
-    grid-template-columns: 100px 200px;
-    grid-template-rows:    auto;
-
-    grid-template-areas: 
-    "img data"
-    "img data";
+    background-color:       #00203680;
+    box-shadow: 0 4px 30px  rgba(0, 0, 0, 0.8);
+    backdrop-filter:          blur(25px);
+    -webkit-backdrop-filter:  blur(25px);
 
     border-radius: 10px;
 
-    background-color: gray;
+    position: fixed;
+    inset:    0;
+    z-index:  9999;
 }
 
 .MD_display_img
@@ -48,38 +28,30 @@
     justify-content: center;
 }
 
-.MD_display_img > img
-{
-    width: 60%;
-    
-    object-fit:   contain;
-    aspect-ratio: 1/1;
-}
-
 .MD_data
 {
-    padding: 1rem;
+    padding: 4rem;
 
+    grid-area:       data;
     display:         flex;
     flex-direction:  column;
     align-items:     center;
     justify-content: space-between;
 
-    grid-area: data;
+    background-color: #00203680;
 }
 
 .MD_data > span
 {
     width: 100%;
 
-    font-size: 1rem;
+    font-size:   1rem;
     font-weight: 500;
     text-align:  center;
     word-wrap:   break-word;
-
 }
 
-.MD_data > button
+.MD_data  button
 {
     height: 5rem;
     width:  150px;
@@ -94,25 +66,125 @@
     border:        none;
     border-radius: 10px;
 
+    transition: all 0.14s ease-in-out;
 }
 
-.MD_data > button:hover { filter: brightness(0.8); cursor: pointer;}
-.MD_data > button:focus { outline: none; }
-
-.MD_success
+/* [ DESKTOP ] */
+@media (min-width: 1020px) 
 {
-    background-color: #56c790;
-    color:#cbfcdf ;
+    .MD_display
+    {
+        height: 400px;
+        width:  800px;
+
+        display:               grid;
+        grid-template-columns: 200px 600px;
+        grid-template-rows:    auto;
+
+        grid-template-areas: 
+        "img data"
+        "img data";
+
+        border-radius: 10px;
+
+        background-color: gray;
+    }
+
+    .MD_display_img > img
+    {
+        width: 60%;
+        
+        object-fit:   contain;
+        aspect-ratio: 1/1;
+    }
+
+    .MD_data > button:hover { filter: brightness(0.8); cursor: pointer;}
+    .MD_data > button:focus { outline: none; }
+
+    .MD_success
+    {
+        background-color: #56c790;
+        color:#cbfcdf ;
+    }
+
+    .MD_warning
+    {
+        background-color:#F57C00 ;
+        color: #ffede8;
+    }
+
+    .MD_error
+    {
+        background-color:#ff1744 ;
+        color: #ffeced;
+    }
 }
 
-.MD_warning
+/* [ MOBILE ]*/
+@media (max-width: 1019px) 
 {
-    background-color:#F57C00 ;
-    color: #ffede8;
-}
+    .MD_display
+    {
+        height: 350px;
+        width:  350px;
 
-.MD_error
-{
-    background-color:#ff1744 ;
-    color: #ffeced;
+        display:               grid;
+        grid-template-columns: 50px 300px;
+        grid-template-rows:    auto;
+
+        grid-template-areas: 
+        "img data"
+        "img data";
+
+        border-radius: 10px;
+
+        background-color: gray;
+    } 
+
+    .MD_display_img > img
+    {
+        width: 80%;
+        
+        object-fit:   contain;
+        aspect-ratio: 1/1;
+    }
+
+
+
+    .MD_data  button
+    {
+        height: 5rem;
+        width:  150px;
+
+        padding: 0 1rem;
+
+        display:         flex;
+        align-items:     center;
+        justify-content: center;
+
+        appearance:    none;
+        border:        none;
+        border-radius: 10px;
+
+
+        transition: all 0.14s ease-in-out;
+    }
+
+    .MD_success
+    {
+        background-color: #56c790;
+        color:#cbfcdf ;
+    }
+
+    .MD_warning
+    {
+        background-color:#F57C00 ;
+        color: #ffede8;
+    }
+
+    .MD_error
+    {
+        background-color:#ff1744 ;
+        color: #ffeced;
+    }
 }

@@ -9,15 +9,17 @@ export default function select_input_component(props)
     let rendered_options = []
     if (isObject) 
     {
-        rendered_options = props.options_master.map((indOption) =>
+        rendered_options = props.options_master.map((indOption,i) =>
         {
-            return( <option key={indOption[props.accessProperty]} value={indOption[props.accessProperty]}>{indOption[props.accessProperty]}</option> )
+            //return( <option key={indOption[props.accessProperty]} value={indOption[props.accessProperty]}>{indOption[props.accessProperty]}</option> )
+            return( <option key={i} value={indOption[props.accessProperty]}>{indOption[props.accessProperty]}</option> )
         })    
     }else
     {
-        rendered_options = props.options_master.map((indOption) =>
+        rendered_options = props.options_master.map((indOption,i) =>
         {
-            return( <option key={indOption} value={indOption}>{indOption}</option> )
+            //return( <option key={indOption} value={indOption}>{indOption}</option> )
+            return( <option key={i} value={indOption}>{indOption}</option> )
         })  
     }
 

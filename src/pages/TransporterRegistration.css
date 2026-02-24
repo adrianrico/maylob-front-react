@@ -1,3 +1,5 @@
+.hidden { display: none; }
+
 /* [ DESKTOP ] */
 @media (min-width: 1020px) 
 {
@@ -99,4 +101,5 @@
         object-fit:   contain;
     }
 
+    .hidden{display:none}
 }

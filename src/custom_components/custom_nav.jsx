@@ -10,7 +10,7 @@ export default function registration_form(props)
         <nav className='CN_container'>
             <Link to="/" className='CN_logo'>
                 <img src={AppLogo} alt="" />
-                <span>KPI Portal</span>
+                <span>TILogistics</span>
             </Link>
 
             <div 

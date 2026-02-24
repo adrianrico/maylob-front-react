@@ -8,6 +8,7 @@ import Transporters   from "./pages/TransporterRegistration"
 
 import { useState }      from 'react'
 import { Routes, Route } from "react-router-dom"
+import { Toaster }       from 'react-hot-toast'
 
 export default function App() 
 {
@@ -17,6 +18,11 @@ export default function App()
 
     return(
         <main className='main_container'>
+
+            <Toaster
+                position="bottom-center"
+                toastOptions={{duration:4000,}}
+            />
 
             <Navbar
                 isOpened     = {menuOpen}
