@@ -19,7 +19,8 @@ export default function TransporterRegistration(props)
         transporter_name:       'NUEVO TRANSPORTISTA',
         transporter_caat:       '',
         transporter_search:     '',
-        transporter_operators:  [ ]
+        transporter_operators:  [ ],
+        transporter_equipment:  [ ],
     }
 
     const ph_op = 
@@ -31,6 +32,20 @@ export default function TransporterRegistration(props)
         operator_license: '',
         operator_address:  '',
         operator_tr_id:   '',
+    }
+
+    const ph_ec = 
+    {
+        eco_id:                '',
+        eco_name:              'NUEVO ECO',
+        eco_number:            '',
+        eco_plates:            '',
+        eco_model:             '',
+        eco_color:             '',
+        eco_serial_number:     '',
+        eco_motor_number:      '',
+        eco_insurance_company: '',
+        eco_insurance_policy:  '',
     }
 
     //⚑ UI conditional control...
@@ -45,9 +60,6 @@ export default function TransporterRegistration(props)
    //⚑ Dropdown options list default values; MUST be initialized as array to send data to dropdown controls...!
     const [transporters, setTransporters] = useState([ph_tr]) 
     const [operators, setOperators]       = useState([ph_op])
-
-    const [current_op_id, set_current_op_id] = useState('')
-
 
 //#region [ API FUNCTIONS ]
 
@@ -128,14 +140,14 @@ export default function TransporterRegistration(props)
     {
         try 
         {
-            const save = await fetch('/api/transporters/transporter', 
+            const deleteTransporterResponse = await fetch('/api/transporters/transporter', 
             {
                 method:  'DELETE',
                 headers: {'Content-Type': 'application/json',},
                 body:    JSON.stringify(tr_form),
             });
 
-            if (!save.ok) 
+            if (!deleteTransporterResponse.ok) 
             {
                 toast.error('[140] - No se pudo almacenar la información!',{duration:4000,position:'top-center'});
                 throw new Error("Error al procesar en el servidor...");
@@ -149,16 +161,83 @@ export default function TransporterRegistration(props)
         } catch (error) { console.log(error) }
     }
 
+    const saveOperator = async () =>
+    {   
+        const updatedOperatorData = 
+        {
+            ...op_form,
+            operator_tr_id:tr_form.transporter_id
+        }
+     
+        set_op_form(updatedOperatorData)
+
+        try 
+        {
+            const saveOperatorResponse = await fetch('/api/transporters/operator', 
+            {
+                method:  'POST',
+                headers: {'Content-Type': 'application/json',},
+                body:    JSON.stringify(updatedOperatorData),
+            });
+
+            if (!saveOperatorResponse.ok) 
+            {
+                toast.error('No se pudo almacenar la información!',{duration:4000,position:'top-center'});
+                throw new Error("[174] - Error al procesar en el servidor...");
+            }else
+            {
+                toast.success('Datos de operador guardados exitosamente!',{duration:4000,position:'top-center'});
+
+                //⚑ Re-render dropdowns...
+                await getTransporters()
+            }
+        } 
+        catch (error) { openModal(['No hay conexión con el servidor ⛟', 'Por favor inténtalo más tarde ⛟'],0 ) } 
+    }
+
+    const deleteOperator = async () =>
+    {
+        const updatedOperatorData = 
+        {
+            ...op_form,
+            operator_tr_id:tr_form.transporter_id
+        }
+     
+        set_op_form(updatedOperatorData)
+
+        try 
+        {
+            const deleteOperatorResponse = await fetch('/api/transporters/operator', 
+            {
+                method:  'DELETE',
+                headers: {'Content-Type': 'application/json',},
+                body:    JSON.stringify(updatedOperatorData),
+            });
+
+            if (!deleteOperatorResponse.ok) 
+            {
+                toast.error('No se pudo procesar la información!',{duration:4000,position:'top-center'});
+                throw new Error("[240] - Error al procesar en el servidor...");
+            }
+
+            toast.success('Operador eliminado',{duration:4000,position:'top-center'});
+            
+            //⚑ API based re-render...
+            await getTransporters()
+            
+        } catch (error) { console.log(error) }
+    }
+
 //#endregion [ API FUNCTIONS ]
 
     useEffect
     (() => { getTransporters() },[])
 
     //Logging for testing --> ❌ To remove...! 
-    console.log(transporters)
-    console.log(operators)
-    console.log(tr_form)
-    console.log(op_form)
+    //console.log(transporters)
+    //console.log(operators)
+    //console.log(tr_form)
+    //console.log(op_form)
     //console.log(current_op_id)
 
 //#region [ TRANSPORTER FUNCTIONS ]  
@@ -185,6 +264,8 @@ export default function TransporterRegistration(props)
 
 //#endregion [ TRANSPORTER FUNCTIONS ]
 
+//#region [ OPERATOR FUNCTIONS]
+
     function operatorSelection(event)
     {
         //⚑ First find the transporter who belongs to and then find it by iterating subarray...
@@ -193,62 +274,14 @@ export default function TransporterRegistration(props)
             let selectedOperator = operators.find(operator => operator.operator_name == event.target.value)
 
             set_op_form(selectedOperator) 
-            set_current_op_id(selectedOperator.operator_id)
-            //set_op_form({...selectedOperator, operator_tr_id:tr_form.transporter_id})
         } 
-        else 
-        { 
-            set_op_form(ph_op) 
-            set_current_op_id('')
-        } //⚑ Avoid crashing by setting to defaul form values...
+        else { set_op_form(ph_op) } //⚑ Avoid crashing by setting to default form values...
     }
 
     function op_clear_entry(fieldToClean) {set_op_form(prev => ({...prev,[fieldToClean]: ''}))}
-    function op_entry_input(event)        
-    {
-        set_op_form(prev => ({...prev,[event.target.name]: event.target.value}))
-        //set_op_form({...op_form, operator_tr_id:tr_form.transporter_id})
-    }
+    function op_entry_input(event)        {set_op_form(prev => ({...prev,[event.target.name]: event.target.value}))}
 
-
-    const saveOperator = async () =>
-    {   
-        const updatedOperatorData = 
-        {
-            ...op_form,
-            operator_tr_id:tr_form.transporter_id
-        }
-        console.log(updatedOperatorData)       
-        set_op_form(updatedOperatorData)
- 
-        try 
-        {
-            const saveOperatorResponse = await fetch('/api/transporters/operator', 
-            {
-                method:  'POST',
-                headers: {'Content-Type': 'application/json',},
-                body:    JSON.stringify(updatedOperatorData),
-            });
-
-            if (!saveOperatorResponse.ok) 
-            {
-                toast.error('No se pudo almacenar la información!',{duration:4000,position:'top-center'});
-                throw new Error("Error al procesar en el servidor...");
-            }else
-            {
-                toast.success('Datos de operador guardados exitosamente!',{duration:4000,position:'top-center'});
-
-                //⚑ Re-render dropdowns...
-                await getTransporters()
-            }
-        } 
-        catch (error) { openModal(['No hay conexión con el servidor ⛟', 'Por favor inténtalo más tarde ⛟'],0 ) } 
-    }
-
-
-
-
-
+//#endregion [ OPERATOR FUNCTIONS ]
 
     return(
         <form className = {form_display ? 'TR_container' : 'hidden'}>
@@ -261,61 +294,61 @@ export default function TransporterRegistration(props)
 
                     <div className='TR_maindata'>
                         <DropdownInput
-                            titleLabel     = 'Selección de TR'
+                            titleLabel     = 'Selección de TRANSPORTISTA'
                             options_master = {transporters} 
                             accessProperty = {'transporter_name'}
                             onChange       = {transporterSelection}      
                         />
                 
                         <EntryInput
-                        titleLabel    = 'Nombre del TR'
-                        inputType     = 'text'
-                        name          = 'transporter_name'
-                        value         = {tr_form.transporter_name}  
-                        cleanEntry    = {tr_clear_entry}
-                        entryChange   = {tr_entry_input}
-                                />
+                            titleLabel    = 'Nombre.'
+                            inputType     = 'text'
+                            name          = 'transporter_name'
+                            value         = {tr_form.transporter_name}  
+                            cleanEntry    = {tr_clear_entry}
+                            entryChange   = {tr_entry_input}
+                        />
                 
                         <EntryInput
-                        titleLabel    = 'CAAT del TR'
-                        inputType     = 'text'
-                        name          = 'transporter_caat'
-                        value         = {tr_form.transporter_caat}  
-                        cleanEntry    = {tr_clear_entry}
-                        entryChange   = {tr_entry_input}
-                                />
+                            titleLabel    = 'CAAT'
+                            inputType     = 'text'
+                            name          = 'transporter_caat'
+                            value         = {tr_form.transporter_caat}  
+                            cleanEntry    = {tr_clear_entry}
+                            entryChange   = {tr_entry_input}
+                        />
 
-                         <div className = {disable_control ? 'hidden':'TR_Btns'}>
+                        <div className = {disable_control ? 'hidden':'TR_Btns'}>
                             <button
-                                type='button'
-                                onClick={saveTransporter}
+                                type     = 'button'
+                                onClick  = {saveTransporter}
                                 disabled = {disable_control}
                             >
                                 Guardar  
-                                <img src={SaveLogo}   alt="" />
+                                <img src={SaveLogo}   alt="Save transporter" />
                             </button>
 
                             <button
-                                type='button'
-                                onClick={deleteTransporter}
+                                type     = 'button'
+                                onClick  = {deleteTransporter}
                                 disabled = {disable_control}
                             >
                                 Eliminar  
-                                <img src={DeleteLogo}   alt="" />
+                                <img src={DeleteLogo}   alt="Delete transporter" />
                             </button>
                         </div>
                     </div>
 
                     <div className={display_subform?'TR_ops':'hidden'}>
                         <DropdownInput
-                            titleLabel     = 'Selección de OP'
+                            titleLabel     = 'Selección de OPERADOR'
                             options_master = {operators} 
                             accessProperty = {'operator_name'}
                             onChange       = {operatorSelection}      
                         />
 
                         <EntryInput
-                            titleLabel    = 'Nombre del OP'
+                            titleLabel    = 'Nombre'
                             inputType     = 'text'
                             name          = 'operator_name'
                             value         = {op_form.operator_name}  
@@ -324,7 +357,7 @@ export default function TransporterRegistration(props)
                         />
                 
                         <EntryInput
-                            titleLabel    = 'RFC del OP'
+                            titleLabel    = 'RFC'
                             inputType     = 'text'
                             name          = 'operator_rfc'
                             value         = {op_form.operator_rfc}  
@@ -333,7 +366,7 @@ export default function TransporterRegistration(props)
                         />
 
                         <EntryInput
-                            titleLabel    = 'NSS del OP'
+                            titleLabel    = 'NSS'
                             inputType     = 'text'
                             name          = 'operator_nss'
                             value         = {op_form.operator_nss}  
@@ -342,7 +375,7 @@ export default function TransporterRegistration(props)
                         />
 
                         <EntryInput
-                            titleLabel    = 'Licencia del OP'
+                            titleLabel    = 'Licencia'
                             inputType     = 'text'
                             name          = 'operator_license'
                             value         = {op_form.operator_license}  
@@ -351,8 +384,8 @@ export default function TransporterRegistration(props)
                         />
 
                         <EntryInput
-                            titleLabel = 'Direcciónn del OP'
-                            inputType  = 'text'
+                            titleLabel    = 'Dirección'
+                            inputType     = 'text'
                             name          = 'operator_address'
                             value         = {op_form.operator_address}  
                             cleanEntry    = {op_clear_entry}
@@ -361,20 +394,28 @@ export default function TransporterRegistration(props)
 
                         <div className='TR_Btns'>
                             <button
-                                type='button'
-                                onClick={saveOperator}
+                                type     = 'button'
+                                onClick  = {saveOperator}
                                 disabled = {disable_control}
                             >
                                 Guardar  
-                                <img src={SaveLogo}   alt="" />
+                                <img src = {SaveLogo}   alt="Save operator" />
                             </button>
-                            <button>Eliminar <img src={DeleteLogo} alt="" /></button>
+
+                            <button
+                                type     = 'button'
+                                onClick  = {deleteOperator}
+                                disabled = {disable_control}
+                            >
+                                Eliminar  
+                                <img src={DeleteLogo}   alt="Delete operator" />
+                            </button>
                         </div>
                     </div>
                 
                 </div>
 
-                <div className={display_subform?'hidden':'hidden'}>
+                <div className={display_subform?'TR_ecos':'hidden'}>
                     <DropdownInput
                         titleLabel     = 'Selección del ECO'
                         options_master = {transporters} 
@@ -383,7 +424,7 @@ export default function TransporterRegistration(props)
                     />
 
                     <EntryInput
-                        titleLabel = 'Nombre asignado'
+                        titleLabel = 'Nombre'
                         inputType  = 'text'
                         name       = 'client_name'
                         value      = {'test'}  
