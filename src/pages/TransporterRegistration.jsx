@@ -7,7 +7,6 @@ import toast                   from 'react-hot-toast'
 import { useState, useEffect } from 'react'
 import { useModal }            from '../context/ModalContext'
 
-
 export default function TransporterRegistration(props)
 {
     const { openModal } = useModal()
@@ -30,7 +29,7 @@ export default function TransporterRegistration(props)
         operator_rfc:     '',
         operator_nss:     '',
         operator_license: '',
-        operator_address:  '',
+        operator_address: '',
         operator_tr_id:   '',
     }
 
@@ -56,10 +55,12 @@ export default function TransporterRegistration(props)
     //⚑ Form default values; MUST be initialized to feed text entries...!
     const [tr_form, set_tr_form] = useState(ph_tr)
     const [op_form, set_op_form] = useState(ph_op)
+    const [ec_form, set_ec_form] = useState(ph_ec)
 
    //⚑ Dropdown options list default values; MUST be initialized as array to send data to dropdown controls...!
     const [transporters, setTransporters] = useState([ph_tr]) 
     const [operators, setOperators]       = useState([ph_op])
+    const [ecos, setEcos]                 = useState([ph_op])
 
 //#region [ API FUNCTIONS ]
 
@@ -77,12 +78,12 @@ export default function TransporterRegistration(props)
 
             if (!getTransportersResponse.ok) 
             {
-                throw new Error('[68] - Problema de conexión con el servidor...');
+                throw new Error('Problema de conexión con el servidor...');
             }
             else
             {
                 const responseData = await getTransportersResponse.json()
-                
+
                 //⚑ Set/Reset TRS...
                 switch (responseData.code) 
                 {
@@ -102,6 +103,10 @@ export default function TransporterRegistration(props)
                 //⚑ Reset OPS...
                 setOperators([ph_op])
                 set_op_form(ph_op)
+
+                //⚑ Reset ECOS...
+                setEcos([ph_ec])
+                set_ec_form(ph_ec)
                 
                 //⚑ Reset UI...
                 set_form_display(true)
@@ -125,7 +130,7 @@ export default function TransporterRegistration(props)
             if (!save.ok) 
             {
                 toast.error('No se pudo almacenar la información!',{duration:4000,position:'top-center'});
-                throw new Error("[116] - Error al procesar en el servidor...");
+                throw new Error("Error al procesar en el servidor...");
             }
 
             toast.success('Transportista guardado exitosamente!',{duration:4000,position:'top-center'});
@@ -149,7 +154,7 @@ export default function TransporterRegistration(props)
 
             if (!deleteTransporterResponse.ok) 
             {
-                toast.error('[140] - No se pudo almacenar la información!',{duration:4000,position:'top-center'});
+                toast.error('No se pudo almacenar la información!',{duration:4000,position:'top-center'});
                 throw new Error("Error al procesar en el servidor...");
             }
 
@@ -183,7 +188,7 @@ export default function TransporterRegistration(props)
             if (!saveOperatorResponse.ok) 
             {
                 toast.error('No se pudo almacenar la información!',{duration:4000,position:'top-center'});
-                throw new Error("[174] - Error al procesar en el servidor...");
+                throw new Error("Error al procesar en el servidor...");
             }else
             {
                 toast.success('Datos de operador guardados exitosamente!',{duration:4000,position:'top-center'});
@@ -217,10 +222,77 @@ export default function TransporterRegistration(props)
             if (!deleteOperatorResponse.ok) 
             {
                 toast.error('No se pudo procesar la información!',{duration:4000,position:'top-center'});
-                throw new Error("[240] - Error al procesar en el servidor...");
+                throw new Error("Error al procesar en el servidor...");
             }
 
             toast.success('Operador eliminado',{duration:4000,position:'top-center'});
+            
+            //⚑ API based re-render...
+            await getTransporters()
+            
+        } catch (error) { console.log(error) }
+    }
+
+    const saveEco = async () =>
+    {   
+        const updatedEcoData = 
+        {
+            ...ec_form,
+            eco_tr_id:tr_form.transporter_id
+        }
+     
+        set_ec_form(updatedEcoData)
+
+        try 
+        {
+            const saveEcoResponse = await fetch('/api/transporters/eco', 
+            {
+                method:  'POST',
+                headers: {'Content-Type': 'application/json',},
+                body:    JSON.stringify(updatedEcoData),
+            });
+
+            if (!saveEcoResponse.ok) 
+            {
+                toast.error('No se pudo almacenar la información!',{duration:4000,position:'top-center'});
+                throw new Error("Error al procesar en el servidor...");
+            }else
+            {
+                toast.success('Datos de ECO guardados exitosamente!',{duration:4000,position:'top-center'});
+
+                //⚑ Re-render dropdowns...
+                await getTransporters()
+            }
+        } 
+        catch (error) { openModal(['No hay conexión con el servidor ⛟', 'Por favor inténtalo más tarde ⛟'],0 ) } 
+    }
+
+    const deleteEco = async () =>
+    {
+        const updatedEcoData = 
+        {
+            ...ec_form,
+            eco_tr_id:tr_form.transporter_id
+        }
+     
+        set_ec_form(updatedEcoData)
+
+        try 
+        {
+            const deleteEcoResponse = await fetch('/api/transporters/eco', 
+            {
+                method:  'DELETE',
+                headers: {'Content-Type': 'application/json',},
+                body:    JSON.stringify(updatedEcoData),
+            });
+
+            if (!deleteEcoResponse.ok) 
+            {
+                toast.error('No se pudo procesar la información!',{duration:4000,position:'top-center'});
+                throw new Error("Error al procesar en el servidor...");
+            }
+
+            toast.success('ECO eliminado',{duration:4000,position:'top-center'});
             
             //⚑ API based re-render...
             await getTransporters()
@@ -232,13 +304,6 @@ export default function TransporterRegistration(props)
 
     useEffect
     (() => { getTransporters() },[])
-
-    //Logging for testing --> ❌ To remove...! 
-    //console.log(transporters)
-    //console.log(operators)
-    //console.log(tr_form)
-    //console.log(op_form)
-    //console.log(current_op_id)
 
 //#region [ TRANSPORTER FUNCTIONS ]  
 
@@ -255,6 +320,12 @@ export default function TransporterRegistration(props)
 
         //⚑ Every time there is a change, set to default values...
         set_op_form(ph_op)
+
+        //⚑ Update ECOS list...
+        setEcos(prev => [prev[0], ...selectedTransporter.transporter_equipment])
+
+        //⚑ Every time there is a change, set to default values...
+        set_ec_form(ph_ec)
          
         set_display_subform(event.target.value == 'NUEVO TRANSPORTISTA'? false:true)
     }
@@ -282,6 +353,25 @@ export default function TransporterRegistration(props)
     function op_entry_input(event)        {set_op_form(prev => ({...prev,[event.target.name]: event.target.value}))}
 
 //#endregion [ OPERATOR FUNCTIONS ]
+
+//#region [ ECO FUNCTIONS]
+
+    function ecoSelection(event)
+    {
+        //⚑ First find the transporter who belongs to and then find it by iterating subarray...
+        if (event.target.value != 'NUEVO ECO') 
+        {
+            let selectedEco = ecos.find(eco => eco.eco_name == event.target.value)
+
+            set_ec_form(selectedEco) 
+        } 
+        else { set_ec_form(ph_ec) } //⚑ Avoid crashing by setting to default form values...
+    }
+
+    function ec_clear_entry(fieldToClean) {set_ec_form(prev => ({...prev,[fieldToClean]: ''}))}
+    function ec_entry_input(event)        {set_ec_form(prev => ({...prev,[event.target.name]: event.target.value}))}
+
+//#endregion [ ECO FUNCTIONS ]
 
     return(
         <form className = {form_display ? 'TR_container' : 'hidden'}>
@@ -418,95 +508,109 @@ export default function TransporterRegistration(props)
                 <div className={display_subform?'TR_ecos':'hidden'}>
                     <DropdownInput
                         titleLabel     = 'Selección del ECO'
-                        options_master = {transporters} 
-                        accessProperty = {'client_name'}
-                        onChange       = {transporterSelection}      
+                        options_master = {ecos} 
+                        accessProperty = {'eco_name'}
+                        onChange       = {ecoSelection}      
                     />
 
                     <EntryInput
                         titleLabel = 'Nombre'
                         inputType  = 'text'
-                        name       = 'client_name'
-                        value      = {'test'}  
-                        cleanEntry = {tr_clear_entry}
-                        entryChange   = {tr_entry_input}
-                            />
+                        name       = 'eco_name'
+                        value      = {ec_form.eco_name}  
+                        cleanEntry = {ec_clear_entry}
+                        entryChange= {ec_entry_input}
+                    />
 
                     <EntryInput
                         titleLabel = 'Número asignado'
                         inputType  = 'text'
-                        name       = 'client_name'
-                        value      = {'test'}  
-                        cleanEntry = {tr_clear_entry}
-                        entryChange   = {tr_entry_input}
-                            />
+                        name       = 'eco_number'
+                        value      = {ec_form.eco_number}  
+                        cleanEntry = {ec_clear_entry}
+                        entryChange= {ec_entry_input}
+                    />
 
                     <EntryInput
                         titleLabel = 'Placas'
                         inputType  = 'text'
-                        name       = 'client_name'
-                        value      = {'test'}  
-                        cleanEntry = {tr_clear_entry}
-                        entryChange   = {tr_entry_input}
-                            />
+                        name       = 'eco_plates'
+                        value      = {ec_form.eco_plates}  
+                        cleanEntry = {ec_clear_entry}
+                        entryChange= {ec_entry_input}
+                    />
 
                     <EntryInput
                         titleLabel = 'Modelo / Año'
                         inputType  = 'text'
-                        name       = 'client_name'
-                        value      = {'test'}  
-                        cleanEntry = {tr_clear_entry}
-                        entryChange   = {tr_entry_input}
-                            />
+                        name       = 'eco_model'
+                        value      = {ec_form.eco_model}  
+                        cleanEntry = {ec_clear_entry}
+                        entryChange= {ec_entry_input}
+                    />
 
                     <EntryInput
                         titleLabel = 'Color'
                         inputType  = 'text'
-                        name       = 'client_name'
-                        value      = {'test'}  
-                        cleanEntry = {tr_clear_entry}
-                        entryChange   = {tr_entry_input}
-                            />
+                        name       = 'eco_color'
+                        value      = {ec_form.eco_color}  
+                        cleanEntry = {ec_clear_entry}
+                        entryChange= {ec_entry_input}
+                    />
 
                     <EntryInput
                         titleLabel = 'Número de serie'
                         inputType  = 'text'
-                        name       = 'client_name'
-                        value      = {'test'}  
-                        cleanEntry = {tr_clear_entry}
-                        entryChange   = {tr_entry_input}
-                            />
+                        name       = 'eco_serial_number'
+                        value      = {ec_form.eco_serial_number}  
+                        cleanEntry = {ec_clear_entry}
+                        entryChange= {ec_entry_input}
+                    />
 
                     <EntryInput
                         titleLabel = 'Número de motor'
                         inputType  = 'text'
-                        name       = 'client_name'
-                        value      = {'test'}  
-                        cleanEntry = {tr_clear_entry}
-                        entryChange   = {tr_entry_input}
-                            />
+                        name       = 'eco_motor_number'
+                        value      = {ec_form.eco_motor_number}  
+                        cleanEntry = {ec_clear_entry}
+                        entryChange= {ec_entry_input}
+                    />
 
                     <EntryInput
                         titleLabel = 'Compañía de seguros'
                         inputType  = 'text'
-                        name       = 'client_name'
-                        value      = {'test'}  
-                        cleanEntry = {tr_clear_entry}
-                        entryChange   = {tr_entry_input}
-                            />
+                        name       = 'eco_insurance_company'
+                        value      = {ec_form.eco_insurance_company}  
+                        cleanEntry = {ec_clear_entry}
+                        entryChange= {ec_entry_input}
+                    />
 
                     <EntryInput
                         titleLabel = 'Número de poliza'
                         inputType  = 'text'
-                        name       = 'client_name'
-                        value      = {'test'}  
-                        cleanEntry = {tr_clear_entry}
-                        entryChange   = {tr_entry_input}
-                            />
+                        name       = 'eco_insurance_policy'
+                        value      = {ec_form.eco_insurance_policy}  
+                        cleanEntry = {ec_clear_entry}
+                        entryChange= {ec_entry_input}
+                    />
 
                     <div className='TR_Btns'>
-                        <button>Save<img src={SaveLogo} alt="" /></button>
-                        <button>Delete<img src={DeleteLogo} alt="" /></button>
+                        <button
+                            type     = 'button'
+                            onClick  = {saveEco}
+                            disabled = {disable_control}
+                        >
+                            Guardar  
+                            <img src = {SaveLogo}   alt="Save eco" />
+                        </button>
+                        <button
+                            type     = 'button'
+                            onClick  = {deleteEco}
+                            disabled = {disable_control}
+                        >
+                            Eliminar  
+                            <img src={DeleteLogo}   alt="Delete eco" />
+                        </button>
                     </div>
                 </div>
                 
