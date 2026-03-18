@@ -10,7 +10,7 @@ export default function ContainerComponent(props)
 
     return(
         <div className='containerComponent_div'>
-            <h1>{props.componentTitle}</h1>
+            <h2>{props.componentTitle}</h2>
 
             <EntryInput
                 titleLabel  = {props.id_label}

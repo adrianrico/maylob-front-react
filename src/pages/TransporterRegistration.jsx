@@ -11,6 +11,8 @@ export default function TransporterRegistration(props)
 {
     const { openModal } = useModal()
     
+//#region [ STATES AND PH'S ]
+
     //⚑ Placeholder forms objects...
     const ph_tr = 
     {
@@ -61,6 +63,8 @@ export default function TransporterRegistration(props)
     const [transporters, setTransporters] = useState([ph_tr]) 
     const [operators, setOperators]       = useState([ph_op])
     const [ecos, setEcos]                 = useState([ph_op])
+
+//#endregion [ STATES AND PH'S ]
 
 //#region [ API FUNCTIONS ]
 
@@ -302,8 +306,7 @@ export default function TransporterRegistration(props)
 
 //#endregion [ API FUNCTIONS ]
 
-    useEffect
-    (() => { getTransporters() },[])
+    useEffect (() => { getTransporters() },[])
 
 //#region [ TRANSPORTER FUNCTIONS ]  
 

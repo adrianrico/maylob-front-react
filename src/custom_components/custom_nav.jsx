@@ -33,6 +33,10 @@ export default function registration_form(props)
                 <li className='CN_link_item'>
                     <Link to="/ManeuverRegistration"> KPI registration </Link>
                 </li>
+
+                <li className='CN_link_item'>
+                    <Link to="/ManeuversPage"> KPI view </Link>
+                </li>
             </ul>
         </nav>
     )

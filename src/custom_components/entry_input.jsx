@@ -25,7 +25,7 @@ export default function input_component(prop)
         setNewState('')
     } */
     
-    //Buil component...
+    //Build component...
     return(
     <article className = 'input_container'>
         <div className = 'controls_container'>

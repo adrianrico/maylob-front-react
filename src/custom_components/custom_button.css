@@ -1,0 +1,63 @@
+    .hidden {display: none;}
+    
+    .custom_button
+    {
+        height: 3.5rem;
+        width:  10rem;
+
+        padding: 0rem 0.5rem;
+    
+        display:         flex;
+        align-items:     center;
+        justify-content: space-between;
+
+        appearance:    none;
+        border:        none;
+        border-radius: 5px;
+
+        transition: all ease-out 0.14s;
+    }
+
+    .custom_button img
+    {
+        height: 50%;
+
+        aspect-ratio: 1/1;
+        object-fit:   contain;
+    }
+
+    .custom_button:hover { filter: brightness(0.8); cursor: pointer;}
+    .custom_button:focus { outline: none; }
+
+
+    .expand_button
+    {
+        height: 3.5rem;
+        width:  3.5rem;
+
+        padding: 0rem 0.5rem;
+    
+        display:         flex;
+        align-items:     center;
+        justify-content: center;
+
+        appearance:    none;
+        border:        none;
+        border-radius: 50%;
+
+        transition: all ease-out 0.14s;
+    }
+
+    .expand_button img
+    {
+        height: 50%;
+
+        aspect-ratio: 1/1;
+        object-fit:   contain;
+    }
+
+    .expand_button:hover { filter: brightness(0.8); cursor: pointer;}
+    .expand_button:focus { outline: none; }
+
+    .blue_bg { background-color: #0695E4; }
+    .red_bg  {background-color:  #f74f4f;}

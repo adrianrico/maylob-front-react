@@ -1,0 +1,57 @@
+.check_input_container
+{ 
+    height:    3.5rem;
+    /*flex: 1 0 350px;*/ 
+
+    display:         flex;
+    align-items:     center;
+    justify-content: center;  
+    gap:             0.5rem;  
+
+    transition: all ease-out 0.24s; 
+}
+
+.check_input_label
+{
+    height: 1.25rem;
+
+    font-weight:    600;
+    font-size:      clamp(0.8rem,1rem,1rem);
+    letter-spacing: 0.05rem;
+    text-align:     center;
+    color:        #e8f1ff;
+}
+
+.filter_check
+{
+    height: 2.5rem;
+    width:  2.5rem;
+
+    display:         flex;
+    align-items:     center;
+    justify-content: center;
+
+    appearance: none;
+    
+    border:        none;
+    border-radius: 5px;
+    
+    background-color: darkgray;
+    
+    transition: all ease-out 0.14s;
+}
+
+.filter_check:hover
+{ 
+    background-color: #0695e4;
+    border-radius: 5px;
+    filter: brightness(0.8); 
+    cursor: pointer;
+}
+
+.filter_check:checked { background-color: #0695E4; }
+.filter_check:checked::after
+{ 
+    font-size: 2rem;
+    content: '⛟';
+}

@@ -33,7 +33,7 @@ export default function ClienRegistration()
   useEffect(() =>
   {
     //fetch('https://maylob-backend.onrender.com/client/readClients')
-    fetch('/api/clients/all')
+    fetch('/api/clients/client')
     .then(res => //Means there is connection...
     {  
       switch (true) 
@@ -134,7 +134,7 @@ export default function ClienRegistration()
             //console.log('Contact saved correctly...')  
             toast.success('Contacto guardado exitosamente!',{duration:4000,position:'bot-center'});
 
-            await fetch('/api/clients/all')
+            await fetch('/api/clients/client')
             .then(res =>
             {  
               switch (true) 
@@ -192,7 +192,7 @@ export default function ClienRegistration()
     {
       try 
       {
-        const deleted = await fetch('/api/clients/deletion', 
+        const deleted = await fetch('/api/clients/client', 
         {
           method:  'DELETE',
           headers: {'Content-Type': 'application/json',},

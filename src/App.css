@@ -28,6 +28,9 @@ html, body
   align-items:     center;
   justify-content: space-between;
   gap:             0.5rem;
+
+  overflow-y: hidden;
+  scrollbar-width: none;
 }
 
 .content
@@ -38,6 +41,9 @@ html, body
   display:         flex;
   align-items:     center;
   justify-content: center;
+
+    overflow-y: hidden;
+  scrollbar-width: none;
 }
 
 @media (min-width: 1020px) 

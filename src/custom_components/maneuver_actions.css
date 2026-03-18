@@ -1,0 +1,85 @@
+@media (min-width: 1020px) 
+{
+    .MP_ind_actions
+    {
+        width:     100%;
+        max-width: 600px;
+
+        padding: 1rem;
+
+        display: grid;
+        grid-template-areas: "check  location_link"
+                             "btns btns";
+
+        column-gap:             1rem;
+        row-gap:                1rem;
+        justify-items:          center;
+
+        background-color:       #00203680;
+        box-shadow: 0 4px 30px  rgba(0, 0, 0, 0.8);
+        backdrop-filter:          blur(25px);
+        -webkit-backdrop-filter:  blur(25px);
+
+        border-radius: 10px;
+
+        transition: all ease-out 0.14s;
+    }
+
+    .MP_ind_actions > div:first-child { grid-area: location_link; }
+
+    .MP_ind_actions > div:nth-child(3)
+    {
+        grid-area: btns;
+
+        width: 100%;
+
+        display:         flex;
+        justify-content: space-between;
+    }
+}
+
+
+
+@media (max-width: 1019px) 
+{
+    .MP_ind_actions
+    {
+        width:     auto;
+        max-width: 370px;
+        
+        padding: 0.5rem;
+
+        background-color: darkblue;
+
+        display: grid;
+
+        grid-template-areas: "location_link location_link"
+                             "btn1 btn1"
+                             "btn2 btn3";
+
+        grid-template-columns: repeat(2 1fr);
+        grid-template-rows:    repeat(3 1fr);  
+        column-gap:            0.5rem;
+        row-gap:               1rem;
+        justify-items:         center;
+
+        background-color:       #00203680;
+        box-shadow: 0 4px 30px  rgba(0, 0, 0, 0.8);
+        backdrop-filter:          blur(25px);
+        -webkit-backdrop-filter:  blur(25px);
+
+        border-radius: 10px;
+
+        transition: all ease-out 0.14s;
+    }
+
+    .MP_ind_actions > div:first-child
+    {
+        grid-area: location_link;
+    }
+    .MP_ind_actions > div:nth-child(2)
+    {
+        grid-area: btn1;
+    }
+    
+}
