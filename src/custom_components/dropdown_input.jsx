@@ -35,8 +35,8 @@ export default function select_input_component(props)
                 <select 
                     className    = 'select_input_entry' 
                     name         = 'select_input_entry' 
-                    /* onChange     = {props.onChange} */
-                     onChange     = {(event) => props.onChange(event, props.funcParam)} 
+                    value        = {props.selected_option}
+                    onChange     = {(event) => props.onChange(event, props.funcParam,props.funcParam)} 
                 >
                     {rendered_options}
                 </select>

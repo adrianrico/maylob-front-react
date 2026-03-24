@@ -40,14 +40,17 @@ export default function input_component(prop)
                 name      = {prop.name} 
                 type      = {type}  
                 value     = {value}  
-                onChange  = {prop.entryChange}
+                //onChange  = {prop.entryChange}
+                onChange  = {(event) => prop.entryChange(event, prop.funcParam, prop.funcParam)} 
             />
         </div>
 
         <button
             className  = 'input_clear'
             type       = 'button' 
-            onClick    = {() => prop.cleanEntry(prop.name)}>
+            /* onClick    = {() => prop.cleanEntry(prop.name)} */
+            onClick   = {(event) => prop.cleanEntry(prop.name, prop.funcParam, prop.funcParam)} 
+        >
             
             <img src={CleanLogo} alt="clear field" />
         </button>

@@ -25,8 +25,9 @@ export default function ContainerComponent(props)
                 titleLabel     = 'Tamaño del contenedor.'
                 options_master = {containers_size} 
                 accessProperty = {''}
+                selected_option = {props.selectedSize}
                 funcParam      = {props.funcParam}
-                onChange       = {props.selectChange}      
+                onChange       = {(event) => props.sizeChange(event, props.manID,props.c_number)}      
             />
 
             <EntryInput
