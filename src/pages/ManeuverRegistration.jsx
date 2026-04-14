@@ -267,7 +267,7 @@ export default function registration_form()
           />
  
           <EntryInput
-            titleLabel  = 'Agente aduanal'
+            titleLabel  = 'Agencia aduanal'
             inputType   = 'text'
             name        = 'man_agent'
             value       = {maneuver_form.man_agent} 

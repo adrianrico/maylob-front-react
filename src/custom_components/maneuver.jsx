@@ -6,24 +6,22 @@ import ManeuverActions         from '../custom_components/maneuver_actions.jsx'
 import ActionButton            from '../custom_components/custom_button.jsx'
 import ContainerComponent      from '../ContainerComponent.jsx'
 import { useState } from 'react'
+import { isValid } from '../common_functions.js'
 
 export default function Maneuver (props)
 {
+    // UI collapse logic...
     const [displayManeuver, setdisplayManeuver]         = useState(false) 
     const [displayContainers, setDisplayContainers]     = useState(false) 
     const [displayGenerals, setdisplayGenerals]         = useState(false) 
     const [displayLoadUnload, setdisplayLoadUnload]     = useState(false) 
     const [displaytransporter, setdisplaytransporter]   = useState(false) 
 
-    function collapseManeuver() { setdisplayManeuver(prev => !prev) }
-    function collapseContainers(e) 
-    { 
-        //e.stopPropagation()
-        setDisplayContainers(prev => !prev) 
-    }
-    function collapseGenerals(e)   { setdisplayGenerals(prev => !prev) }
-    function collapseLoadUnload(e) { setdisplayLoadUnload(prev => !prev) }
-    function collapseTransporter(e) { setdisplaytransporter(prev => !prev) }
+    function collapseManeuver()    { setdisplayManeuver(prev => !prev) }
+    function collapseContainers()  { setDisplayContainers(prev => !prev) }
+    function collapseGenerals()    { setdisplayGenerals(prev => !prev) }
+    function collapseLoadUnload()  { setdisplayLoadUnload(prev => !prev) }
+    function collapseTransporter() { setdisplaytransporter(prev => !prev) }
 
     return(
     <article className='ind_maneuver_container'>
@@ -55,7 +53,7 @@ export default function Maneuver (props)
                     name        = 'man_dispatch_date'
                     value       = {props.dispatchDate}  
                    /*  cleanEntry  = {props.cleanEntry} */
-                    cleanEntry = {(event) => props.cleanEntry(event, props.manID, 'START DATE CLEAN')} 
+                    cleanEntry  = {(event) => props.cleanEntry(event, props.manID)} 
                     entryChange = {(event) => props.entryChange(event, props.manID, 'START')} 
                 /> 
             </div>
@@ -133,97 +131,141 @@ export default function Maneuver (props)
 
                     <div>
                         <ContainerComponent 
-                            componentTitle    = 'Contenedor A'
-                            id_label          = 'ID de contenedor.'
-                            id_inputType      = 'text'
-                            id_name           = 'man_c1_id'
-                            id_value          = {props.cont_1_ID} 
-                            content_label     = 'Contenido de contenedor.'
-                            content_inputType = 'text'
-                            content_name      = 'man_c1_content'
-                            content_value     = {props.cont_1_content} 
-                            weight_label      = 'Peso del contenedor.'
-                            weight_inputType  = 'number'
-                            weight_name       = 'man_c1_weight'
-                            weight_value      = {props.cont_1_weight} 
-                            type_label        = 'Tipo de contenedor.'
-                            type_inputType    = 'text'
-                            type_name         = 'man_c1_type'
-                            type_value        = {props.cont_1_type} 
-                            funcParam         = 'man_c1_size'
-                            selectedSize      = {props.cont_1_size}
-                            sizeChange        = {(event) => props.cont_1_sizeSel(event, props.manID,'1')}
+                            componentTitle       = 'Contenedor A'
+                     
+                            id_label             = 'ID de contenedor.'
+                            id_inputType         = 'text'
+                            id_name              = 'man_c1_id'
+                            id_value             = {props.cont_1_ID} 
+                            id_entry_change      = {(event) => props.cont_entry_change(event, props.manID, 'man_c1_id')} 
+
+                            funcParam            = 'man_c1_size'
+                            selectedSize         = {props.cont_1_size}
+                            sizeChange           = {(event) => props.cont_1_sizeSel(event, props.manID,'1')}
+         
+                            content_label        = 'Contenido de contenedor.'
+                            content_inputType    = 'text'
+                            content_name         = 'man_c1_content'
+                            content_value        = {props.cont_1_content} 
+                            content_entry_change = {(event) => props.cont_entry_change(event, props.manID, 'man_c1_content')} 
+
+                            weight_label         = 'Peso del contenedor.'
+                            weight_inputType     = 'number'
+                            weight_name          = 'man_c1_weight'
+                            weight_value         = {props.cont_1_weight}
+                            weight_entry_change  = {(event) => props.cont_entry_change(event, props.manID, 'man_c1_weight')} 
+                            
+                            type_label           = 'Tipo de contenedor.'
+                            type_inputType       = 'text'
+                            type_name            = 'man_c1_type'
+                            type_value           = {props.cont_1_type} 
+                            type_entry_change    = {(event) => props.cont_entry_change(event, props.manID, 'man_c1_type')} 
+
+                            cleanEntry           = {(event) => props.cleanEntry(event, props.manID)}                            
                         />
 
                         <ContainerComponent 
-                            componentTitle    = 'Contenedor B'
-                            id_label          = 'ID de contenedor.'
-                            id_inputType      = 'text'
-                            id_name           = 'man_c2_id'
-                            id_value          = {props.cont_2_ID} 
-                            content_label     = 'Contenido de contenedor.'
-                            content_inputType = 'text'
-                            content_name      = 'man_c2_content'
-                            content_value     = {props.cont_2_content} 
-                            weight_label      = 'Peso del contenedor.'
-                            weight_inputType  = 'number'
-                            weight_name       = 'man_c2_weight'
-                            weight_value      = {props.cont_2_weight} 
-                            type_label        = 'Tipo de contenedor.'
-                            type_inputType    = 'text'
-                            type_name         = 'man_c2_type'
-                            type_value        = {props.cont_2_type} 
-                            funcParam         = 'man_c2_size'
-                            selectedSize      = {props.cont_2_size}
-                            sizeChange        = {(event) => props.cont_2_sizeSel(event, props.manID,'2')}
+                            componentTitle       = 'Contenedor B'
+                     
+                            id_label             = 'ID de contenedor.'
+                            id_inputType         = 'text'
+                            id_name              = 'man_c2_id'
+                            id_value             = {props.cont_2_ID} 
+                            id_entry_change      = {(event) => props.cont_entry_change(event, props.manID, 'man_c2_id')} 
+
+                            funcParam            = 'man_c2_size'
+                            selectedSize         = {props.cont_2_size}
+                            sizeChange           = {(event) => props.cont_2_sizeSel(event, props.manID,'2')}
+         
+                            content_label        = 'Contenido de contenedor.'
+                            content_inputType    = 'text'
+                            content_name         = 'man_c2_content'
+                            content_value        = {props.cont_2_content} 
+                            content_entry_change = {(event) => props.cont_entry_change(event, props.manID, 'man_c2_content')} 
+
+                            weight_label         = 'Peso del contenedor.'
+                            weight_inputType     = 'number'
+                            weight_name          = 'man_c2_weight'
+                            weight_value         = {props.cont_2_weight}
+                            weight_entry_change  = {(event) => props.cont_entry_change(event, props.manID, 'man_c2_weight')} 
+                            
+                            type_label           = 'Tipo de contenedor.'
+                            type_inputType       = 'text'
+                            type_name            = 'man_c2_type'
+                            type_value           = {props.cont_2_type} 
+                            type_entry_change    = {(event) => props.cont_entry_change(event, props.manID, 'man_c2_type')} 
+
+                            cleanEntry           = {(event) => props.cleanEntry(event, props.manID)}                            
                         />
                     </div>
 
                     <div>
                         <ContainerComponent 
-                            componentTitle    = 'Contenedor C'
-                            id_label          = 'ID de contenedor.'
-                            id_inputType      = 'text'
-                            id_name           = 'man_c3_id'
-                            id_value          = {props.cont_3_ID} 
-                            content_label     = 'Contenido de contenedor.'
-                            content_inputType = 'text'
-                            content_name      = 'man_c3_content'
-                            content_value     = {props.cont_3_content} 
-                            weight_label      = 'Peso del contenedor.'
-                            weight_inputType  = 'number'
-                            weight_name       = 'man_c3_weight'
-                            weight_value      = {props.cont_3_weight} 
-                            type_label        = 'Tipo de contenedor.'
-                            type_inputType    = 'text'
-                            type_name         = 'man_c3_type'
-                            type_value        = {props.cont_3_type} 
-                            funcParam         = 'man_c3_size'
-                            selectedSize      = {props.cont_3_size}
-                            sizeChange        = {(event) => props.cont_3_sizeSel(event, props.manID,'3')}
+                            componentTitle       = 'Contenedor C'
+                     
+                            id_label             = 'ID de contenedor.'
+                            id_inputType         = 'text'
+                            id_name              = 'man_c3_id'
+                            id_value             = {props.cont_3_ID} 
+                            id_entry_change      = {(event) => props.cont_entry_change(event, props.manID, 'man_c3_id')} 
+
+                            funcParam            = 'man_c3_size'
+                            selectedSize         = {props.cont_3_size}
+                            sizeChange           = {(event) => props.cont_3_sizeSel(event, props.manID,'3')}
+         
+                            content_label        = 'Contenido de contenedor.'
+                            content_inputType    = 'text'
+                            content_name         = 'man_c3_content'
+                            content_value        = {props.cont_3_content} 
+                            content_entry_change = {(event) => props.cont_entry_change(event, props.manID, 'man_c3_content')} 
+
+                            weight_label         = 'Peso del contenedor.'
+                            weight_inputType     = 'number'
+                            weight_name          = 'man_c3_weight'
+                            weight_value         = {props.cont_3_weight}
+                            weight_entry_change  = {(event) => props.cont_entry_change(event, props.manID, 'man_c3_weight')} 
+                            
+                            type_label           = 'Tipo de contenedor.'
+                            type_inputType       = 'text'
+                            type_name            = 'man_c3_type'
+                            type_value           = {props.cont_3_type} 
+                            type_entry_change    = {(event) => props.cont_entry_change(event, props.manID, 'man_c3_type')} 
+
+                            cleanEntry           = {(event) => props.cleanEntry(event, props.manID)}                            
                         />
 
                         <ContainerComponent 
-                            componentTitle    = 'Contenedor D'
-                            id_label          = 'ID de contenedor.'
-                            id_inputType      = 'text'
-                            id_name           = 'man_c4_id'
-                            id_value          = {props.cont_4_ID} 
-                            content_label     = 'Contenido de contenedor.'
-                            content_inputType = 'text'
-                            content_name      = 'man_c4_content'
-                            content_value     = {props.cont_4_content} 
-                            weight_label      = 'Peso del contenedor.'
-                            weight_inputType  = 'number'
-                            weight_name       = 'man_c4_weight'
-                            weight_value      = {props.cont_4_weight} 
-                            type_label        = 'Tipo de contenedor.'
-                            type_inputType    = 'text'
-                            type_name         = 'man_c4_type'
-                            type_value        = {props.cont_4_type} 
-                            funcParam         = 'man_c4_size'
-                            selectedSize      = {props.cont_4_size}
-                            sizeChange        = {(event) => props.cont_4_sizeSel(event, props.manID,'4')}
+                            componentTitle       = 'Contenedor D'
+                     
+                            id_label             = 'ID de contenedor.'
+                            id_inputType         = 'text'
+                            id_name              = 'man_c4_id'
+                            id_value             = {props.cont_4_ID} 
+                            id_entry_change      = {(event) => props.cont_entry_change(event, props.manID, 'man_c4_id')} 
+
+                            funcParam            = 'man_c4_size'
+                            selectedSize         = {props.cont_4_size}
+                            sizeChange           = {(event) => props.cont_4_sizeSel(event, props.manID,'3')}
+         
+                            content_label        = 'Contenido de contenedor.'
+                            content_inputType    = 'text'
+                            content_name         = 'man_c4_content'
+                            content_value        = {props.cont_4_content} 
+                            content_entry_change = {(event) => props.cont_entry_change(event, props.manID, 'man_c4_content')} 
+
+                            weight_label         = 'Peso del contenedor.'
+                            weight_inputType     = 'number'
+                            weight_name          = 'man_c4_weight'
+                            weight_value         = {props.cont_4_weight}
+                            weight_entry_change  = {(event) => props.cont_entry_change(event, props.manID, 'man_c4_weight')} 
+                            
+                            type_label           = 'Tipo de contenedor.'
+                            type_inputType       = 'text'
+                            type_name            = 'man_c4_type'
+                            type_value           = {props.cont_4_type} 
+                            type_entry_change    = {(event) => props.cont_entry_change(event, props.manID, 'man_c4_type')} 
+
+                            cleanEntry           = {(event) => props.cleanEntry(event, props.manID)}                            
                         />
                     </div>
 
@@ -253,34 +295,25 @@ export default function Maneuver (props)
                         <EntryInput
                             titleLabel  = 'Agente aduanal'
                             inputType   = ''
-                            name        = ''
-                            value       = {props.man_dispatch_date}  
-                            cleanEntry  = {props.cleanEntry}
-                            entryChange = {props.entryChange} 
+                            name        = 'man_agent'
+                            value       = {props.agent}  
+                            cleanEntry  = {(event) => props.cleanEntry(event, props.manID)}
+                            entryChange = {(event) => props.cont_entry_change(event, props.manID, 'man_agent')} 
                         /> 
 
                         <EntryInput
                             titleLabel  = 'Ejecutivo(a)'
                             inputType   = ''
-                            name        = ''
-                            value       = {props.man_dispatch_date}  
-                            cleanEntry  = {props.cleanEntry}
-                            entryChange = {props.entryChange} 
-                        />  
-                        
-                        <EntryInput
-                            titleLabel  = 'CAAT'
-                            inputType   = ''
-                            name        = ''
-                            value       = {props.man_dispatch_date}  
-                            cleanEntry  = {props.cleanEntry}
-                            entryChange = {props.entryChange} 
+                            name        = 'man_executive'
+                            value       = {props.executive}  
+                            cleanEntry  = {(event) => props.cleanEntry(event, props.manID)}
+                            entryChange = {(event) => props.cont_entry_change(event, props.manID, 'man_executive')} 
                         />  
 
                         <textarea 
-                            placeholder='Nota(s)'
-                            cleanEntry  = {props.cleanEntry}
-                            onChange = {props.entryChange} 
+                            placeholder = 'Nota(s)'
+                            value       = {props.note}
+                            onChange    = {(event) => props.cont_entry_change(event, props.manID, 'man_note')} 
                         />
 
                     </>)}
@@ -360,6 +393,17 @@ export default function Maneuver (props)
                         accessProperty = {''}
                         onChange       = {'ecoSelection'}      
                     />
+
+                    <h4 className ={isValid(props.caat) ? '': 'hidden'}>CAAT: {isValid(props.caat) ? props.caat : 'Sin asignar.'}</h4>
+
+{/*                     <EntryInput
+                        titleLabel  = 'CAAT'
+                        inputType   = ''
+                        name        = 'man_caat'
+                        value       = {props.caat}  
+                        cleanEntry  = {(event) => props.cleanEntry(event, props.manID)}
+                        entryChange = {(event) => props.cont_entry_change(event, props.manID, 'man_caat')} 
+                    />   */}
                     
                     <DropdownInput
                         titleLabel     = 'Operador'

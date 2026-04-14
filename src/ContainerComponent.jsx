@@ -18,7 +18,7 @@ export default function ContainerComponent(props)
                 name        = {props.id_name}
                 value       = {props.id_value}  
                 cleanEntry  = {props.cleanEntry}
-                entryChange = {props.entryChange}
+                entryChange = {props.id_entry_change}
             />
 
             <DropdownInput
@@ -36,7 +36,7 @@ export default function ContainerComponent(props)
                 name        = {props.content_name}
                 value       = {props.content_value}  
                 cleanEntry  = {props.cleanEntry}
-                entryChange = {props.entryChange}
+                entryChange = {props.content_entry_change}
             />
 
             <EntryInput
@@ -45,7 +45,7 @@ export default function ContainerComponent(props)
                 name        = {props.weight_name}
                 value       = {props.weight_value}  
                 cleanEntry  = {props.cleanEntry}
-                entryChange = {props.entryChange}
+                entryChange = {props.weight_entry_change}
             />
 
             <EntryInput
@@ -54,7 +54,7 @@ export default function ContainerComponent(props)
                 name        = {props.type_name}
                 value       = {props.type_value}  
                 cleanEntry  = {props.cleanEntry}
-                entryChange = {props.entryChange}
+                entryChange = {props.type_entry_change}
             />
         </div>
     )

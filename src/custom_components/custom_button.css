@@ -15,6 +15,8 @@
         border:        none;
         border-radius: 5px;
 
+        text-decoration: none;
+
         transition: all ease-out 0.14s;
     }
 
@@ -29,8 +31,7 @@
     .custom_button:hover { filter: brightness(0.8); cursor: pointer;}
     .custom_button:focus { outline: none; }
 
-
-    .expand_button
+    .circle_button
     {
         height: 3.5rem;
         width:  3.5rem;
@@ -48,7 +49,7 @@
         transition: all ease-out 0.14s;
     }
 
-    .expand_button img
+    .circle_button img
     {
         height: 50%;
 
@@ -56,8 +57,9 @@
         object-fit:   contain;
     }
 
-    .expand_button:hover { filter: brightness(0.8); cursor: pointer;}
-    .expand_button:focus { outline: none; }
+    .circle_button:hover { filter: brightness(0.8); cursor: pointer;}
+    .circle_button:focus { outline: none; }
 
-    .blue_bg { background-color: #0695E4; }
-    .red_bg  {background-color:  #f74f4f;}
+    .blue_bg  {background-color: #0695E4;}
+    .red_bg   {background-color: #f74f4f;}
+    .green_bg {background-color: #b4ef3c;}

@@ -253,8 +253,13 @@ export default function ManeuversPage ()
         setmaneuversList(maneuvers_copy)
     }
 
-    function dateEntry(event, man_id, date2Adjust)
+    function entriesChange(event, man_id, date2Adjust)
     {
+
+        console.log(event.target.value)
+        console.log(man_id)
+        console.log(date2Adjust)
+
         // Create main MANEUVERS list copy...
         const maneuvers_copy = [...maneuversList]
         
@@ -286,15 +291,31 @@ export default function ManeuversPage ()
         
         // Find the object to be updated from the list...
         const updatedManeuver = maneuvers_copy.find(maneuver => maneuver.man_id === man_id)
-
+  
         // Set state according to control
-        switch (control) 
-        {
-            case 'START DATE CLEAN':
-                 updatedManeuver.man_dispatch_date = ''        
-            break;
-        }
+        updatedManeuver[event] = ''   
+        
+        console.log(updatedManeuver)
+        // Update STATES...
+        setmaneuversList(maneuvers_copy)
+    }
 
+    function containerEntryChange(event,manID,fieldToUpdate)
+    {
+        console.log(event)
+        console.log(manID)
+        console.log(fieldToUpdate)
+
+        // Create main MANEUVERS list copy...
+        const maneuvers_copy = [...maneuversList]
+        
+        // Find the object to be updated from the list...
+        const updatedManeuver = maneuvers_copy.find(maneuver => maneuver.man_id === manID)
+  
+        // Set state according to control
+        updatedManeuver[fieldToUpdate] = event.target.value   
+        
+        console.log(updatedManeuver)
         // Update STATES...
         setmaneuversList(maneuvers_copy)
     }
@@ -332,13 +353,6 @@ export default function ManeuversPage ()
         // Update the MANEUVERS LIST with the only...
         setmaneuversList(maneuvers_copy)
     }
-
-    function clear_entry()
-    {
-        console.log('Clear entry')
-    }
-
-
 
 
 
@@ -400,7 +414,7 @@ export default function ManeuversPage ()
 
                                 dispatchDate     = {maneuver.man_dispatch_date}
                                 cleanEntry       = {cleanEntries}
-                                entryChange      = {dateEntry}
+                                entryChange      = {entriesChange}
 
                                 endDate          = {
                                                         maneuver.man_events[maneuver.man_events.length-1] === '0%' ? ('SIN INICIAR') 
@@ -408,33 +422,40 @@ export default function ManeuversPage ()
                                                         : 'AÚN EN CURSO'
                                                    }
 
-                                cont_1_ID       = {isValid(maneuver.man_c1_id)      ? maneuver.man_c1_id      : 'Sin usar'}
+                                cont_1_ID       = {isValid(maneuver.man_c1_id)      ? maneuver.man_c1_id      : ''}
                                 cont_1_content  = {isValid(maneuver.man_c1_content) ? maneuver.man_c1_content : ''}
                                 cont_1_weight   = {isValid(maneuver.man_c1_weight)  ? maneuver.man_c1_weight  : ''}
                                 cont_1_type     = {isValid(maneuver.man_c1_type)    ? maneuver.man_c1_type    : ''}    
                                 cont_1_size     = {maneuver.man_c1_size} 
                                 cont_1_sizeSel  = {containerSizeSelection} 
 
-                                cont_2_ID       = {isValid(maneuver.man_c2_id)      ? maneuver.man_c2_id      : 'Sin usar'}
+                                cont_2_ID       = {isValid(maneuver.man_c2_id)      ? maneuver.man_c2_id      : ''}
                                 cont_2_content  = {isValid(maneuver.man_c2_content) ? maneuver.man_c2_content : ''}
                                 cont_2_weight   = {isValid(maneuver.man_c2_weight)  ? maneuver.man_c2_weight  : ''}
                                 cont_2_type     = {isValid(maneuver.man_c2_type)    ? maneuver.man_c2_type    : ''}    
                                 cont_2_size     = {maneuver.man_c2_size} 
                                 cont_2_sizeSel  = {containerSizeSelection} 
 
-                                cont_3_ID       = {isValid(maneuver.man_c3_id)      ? maneuver.man_c3_id      : 'Sin usar'}
+                                cont_3_ID       = {isValid(maneuver.man_c3_id)      ? maneuver.man_c3_id      : ''}
                                 cont_3_content  = {isValid(maneuver.man_c3_content) ? maneuver.man_c3_content : ''}
                                 cont_3_weight   = {isValid(maneuver.man_c3_weight)  ? maneuver.man_c3_weight  : ''}
                                 cont_3_type     = {isValid(maneuver.man_c3_type)    ? maneuver.man_c3_type    : ''}    
                                 cont_3_size     = {maneuver.man_c3_size} 
                                 cont_3_sizeSel  = {containerSizeSelection} 
 
-                                cont_4_ID       = {isValid(maneuver.man_c4_id)      ? maneuver.man_c4_id      : 'Sin usar'}
+                                cont_4_ID       = {isValid(maneuver.man_c4_id)      ? maneuver.man_c4_id      : ''}
                                 cont_4_content  = {isValid(maneuver.man_c4_content) ? maneuver.man_c4_content : ''}
                                 cont_4_weight   = {isValid(maneuver.man_c4_weight)  ? maneuver.man_c4_weight  : ''}
                                 cont_4_type     = {isValid(maneuver.man_c4_type)    ? maneuver.man_c4_type    : ''}    
                                 cont_4_size     = {maneuver.man_c4_size} 
                                 cont_4_sizeSel  = {containerSizeSelection} 
+
+                                agent     = {maneuver.man_agent}
+                                executive = {maneuver.man_executive}
+                                caat      = {maneuver.man_caat}
+                                note      = {maneuver.man_note}
+
+                                cont_entry_change = {containerEntryChange}
                             />
                     ))}
 
@@ -443,7 +464,7 @@ export default function ManeuversPage ()
                 </aside>
 
                 {/* <aside className='MP_visuals'> */}
-                <aside className='hidden'>
+                <aside className='MP_visuals'>
                     <div className='MP_visuals_item'>
                         Events list
                     </div>

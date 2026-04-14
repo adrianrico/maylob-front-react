@@ -27,11 +27,6 @@
         display:         flex;
         align-items:     center;
         justify-content: space-between;
-
-        background-color:#001222;
-        /* background-color:#002036; */
-
-
     }
 
     .CN_logo
@@ -60,37 +55,13 @@
         display:     flex;
         align-items: center;
         gap:         1rem;
-
-        list-style-type: none;
-
-        transition: transform 0.3s ease, opacity 0.3s ease;
     }
 
     .CN_link_item 
     {
-        height: 4rem;
-        width:  14rem;
 
-        padding-left: 0.5rem;
-
-        display:         flex;
-        align-items:     center;
-        justify-content: center;
-       
-        border-radius:    5px;
-        background-color: transparent;
-
-        transition: all ease-out 0.20s;
-    }
-
-    .CN_link_item > a 
-    {
         text-decoration: none;
-        color: #0695e4;
     }
-
-    .CN_link_item:hover   { background-color:#0695e4; }
-    .CN_link_item:hover > a { color:#e8f1ff; }
 }
 
 

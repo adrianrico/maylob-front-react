@@ -1,11 +1,11 @@
 import '../pages/Home.css'
-import TruckLogo from '../assets/main_logo.jpg'
+import TruckLogo from '../assets/truck.svg'
 
 export default function Home() 
 {
   return(
     <section className='HP_container'>
-      <img src={TruckLogo} className='HP_logo'/>
+     {/*  <img src={TruckLogo} className='HP_logo'/> */}
 
       <span>¡Bienvenido!</span>
     </section>

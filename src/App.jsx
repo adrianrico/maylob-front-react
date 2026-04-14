@@ -3,9 +3,10 @@ import './App.css'
 import Navbar         from "./custom_components/custom_nav"
 import Home           from "./pages/Home"
 import Maneuvers      from "./pages/ManeuverRegistration"
-import ManeuversP      from "./pages/ManeuversPage"
+import ManeuversP     from "./pages/ManeuversPage"
 import Clients        from "./pages/ClientRegistration"
 import Transporters   from "./pages/TransporterRegistration"
+import CustomRoute    from "./pages/RoutesRegistration"
 
 import { useState }      from 'react'
 import { Routes, Route } from "react-router-dom"
@@ -35,6 +36,7 @@ export default function App()
                     <Route path="/"                          element={<Home />          } />
                     <Route path="/ClientRegistration"        element={<Clients />       } />
                     <Route path="/TransporterRegistration"   element={<Transporters />  } />
+                    <Route path="/RouteRegistration"         element={<CustomRoute />  } />
                     <Route path="/ManeuverRegistration"      element={<Maneuvers />     } />
                     <Route path="/ManeuversPage"             element={<ManeuversP />    } />
                 </Routes>

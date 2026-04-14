@@ -1,17 +1,16 @@
 import '../custom_components/custom_button.css'
-import NavArrowLogo  from '../assets/nav_arrow_white.svg'
+import ExpArrowLogo  from '../assets/expand_arrow_white.svg'
 import DeleteLogo    from '../assets/delete_white.svg'
 import SaveLogo      from '../assets/save_white.svg'
+import AddLogo       from '../assets/add_white.svg'
+import RemoveLogo    from '../assets/remove_white.svg'
 import { isValid }   from '../common_functions.js'
 
 export default function CustomButtont(props)
 {
-    const type = isValid(props.type) ? props.type : 'button'
     const button_text = isValid(props.text) ? props.text : ''
-
-    /** - Step [1] 
-     *  - Select color background dinamically...
-     */
+    
+    // Set background color if received...
     let background = ''
 
     switch (props.color) 
@@ -23,36 +22,58 @@ export default function CustomButtont(props)
         case 'blue':
             background = 'blue_bg'    
         break;
+
+        case 'green':
+            background = 'green_bg'    
+        break;
     }
 
-
-    /** - Step [2]
-     *  - Select logo according to action...
-     */
+    // Set Set image according to received parameter...
     let action_logo = ''
+    let isCircled   = false
 
     switch (props.action) 
     {
         case 'delete':
             action_logo = DeleteLogo    
         break;
-        
-        case 'navigation':
-            action_logo = NavArrowLogo 
-        break;
 
         case 'save':
             action_logo = SaveLogo   
         break;
+
+        case 'expand':
+            action_logo = ExpArrowLogo 
+            isCircled = true
+        break;
+
+        case 'add':
+            action_logo = AddLogo 
+            isCircled = true
+        break;
+
+        case 'remove':
+            action_logo = RemoveLogo 
+            isCircled = true
+        break;
+
+        case 'navigation':
+            
+        break;
+        
     }
 
     return(
         <button
-            className = {props.action === 'navigation' ? ('expand_button '+background) : ('custom_button '+background)}
-            type      = {type}
+            className = {isCircled ? ('circle_button '+background) : ('custom_button '+background)}
+            type      = 'button'
         >
-        {button_text}
-        <img src={action_logo}   aria-label= {'custom button'} />
+        {!isCircled && (button_text)}
+ 
+        {props.action != 'navigation' && (
+            <img src={action_logo}   aria-label= {'custom button'} /> 
+        )}
+        
         </button>
     )
 }

@@ -39,6 +39,8 @@ export default function input_component(prop)
                 className = 'input_entry'
                 name      = {prop.name} 
                 type      = {type}  
+                min       = {type == 'number' ? 0     : ''}
+                max       = {type == 'number' ? 10000 : ''}
                 value     = {value}  
                 //onChange  = {prop.entryChange}
                 onChange  = {(event) => prop.entryChange(event, prop.funcParam, prop.funcParam)} 
@@ -49,7 +51,8 @@ export default function input_component(prop)
             className  = 'input_clear'
             type       = 'button' 
             /* onClick    = {() => prop.cleanEntry(prop.name)} */
-            onClick   = {(event) => prop.cleanEntry(prop.name, prop.funcParam, prop.funcParam)} 
+            /* onClick   = {(event) => prop.cleanEntry(prop.name, prop.funcParam, prop.funcParam)}  */
+            onClick   = {(event) => prop.cleanEntry(prop.name, prop.funcParam)} 
         >
             
             <img src={CleanLogo} alt="clear field" />
